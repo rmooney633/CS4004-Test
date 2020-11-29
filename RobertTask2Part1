@@ -272,3 +272,61 @@ public class NumberSquared {
 
 The Problem:
 The original code was finding the square root rather than the square of the number
+
+
+
+
+Test 4
+
+Original Code
+
+public class RhombusArea {
+
+	public static double areaOfRhombus(double diameter1, double diameter2) {
+		
+		double Area = 1/2 * diameter1 * diameter2;
+		
+		return Area;
+		}
+	
+}
+
+
+Test Code
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class RhombusAreaTest {
+
+	@Test
+	void test() {
+		RhombusArea test = new RhombusArea();
+		double output = test.areaOfRhombus(20, 18);
+		assertEquals(180, output);
+	}
+
+}
+
+
+Failures:
+output: expected: 180		but was: 720
+
+
+Fixed Code:
+
+public class RhombusArea {
+
+	public static double areaOfRhombus(double diameter1, double diameter2) {
+		
+		double Area = 0.5 * diameter1 * diameter2;
+		
+		return Area;
+		}
+	
+}
+
+
+The Problem:
+The original code was displaying a half as "1/2" but this meants that the calculation was incorrect
