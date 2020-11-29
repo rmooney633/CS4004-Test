@@ -1,0 +1,274 @@
+Test 1
+
+Original Code
+
+	public class BiggestNumber {
+
+	public static Object displayLargestNumber(double num1, double num2, 
+		    double num3)
+		    {
+		
+			double Answer = 0;
+		
+		        if(num1>=num2 || num1>=num3){
+		            Answer = num1;
+		        }
+		        if(num2>=num1 || num2>=num3){
+		            Answer = num2;
+		        }
+		        if(num3>=num1 || num3>=num2){
+		            Answer = num3;
+		        }
+				return Answer;
+		    }
+	}
+
+
+Test Code
+
+	import static org.junit.jupiter.api.Assertions.*;
+
+	import org.junit.jupiter.api.Test;
+
+	class BiggestNumberTest {
+
+	@Test
+	void test() {
+		BiggestNumber test = new BiggestNumber();
+		double output = (double) test.displayLargestNumber(567, 55.6, 243);
+		assertEquals(567, output);
+	}
+
+}
+
+
+Failures:
+
+output: expected: 567	but was: 243
+
+
+Fixed Code:
+
+public class BiggestNumber {
+
+	public static Object displayLargestNumber(double num1, double num2, 
+		    double num3)
+		    {
+		
+			double Answer = 0;
+		
+		        if(num1>=num2 && num1>=num3){
+		            Answer = num1;
+		        }
+		        if(num2>=num1 && num2>=num3){
+		            Answer = num2;
+		        }
+		        if(num3>=num1 && num3>=num2){
+		            Answer = num3;
+		        }
+				return Answer;
+		    }
+}
+
+
+The problem:
+In the IF statements, AND was required rather than OR
+
+
+
+Test 2
+
+Original Code
+
+public class RockPaperScissors {
+    	public static String RockPaperScissorGame(int playerNumber)
+    	{
+        int programNumber = (int)(Math.random()*3);
+        String Answer = null;
+        
+        if (programNumber == 1) {
+            if (playerNumber == 0) {
+            	Answer = "The computer is scissor. You are scissor. It is a Draw";
+                return Answer;
+            }
+            if (playerNumber == 1) {
+            	Answer = "The computer is scissor. You are rock. You Win";
+            	System.out.println(Answer);
+            }
+            if (playerNumber == 2) {
+            	Answer = "The computer is scissor. You are paper. You Lose";
+                System.out.println(Answer);
+            }
+        }
+        if (programNumber == 2) {
+            if (playerNumber == 0) {
+            	Answer = "The computer is rock. You are scissor. You Lose";
+                System.out.println(Answer);
+            }
+            if (playerNumber == 1) {
+            	Answer = "The computer is rock. You are rock. It is a Draw";
+                System.out.println(Answer);
+            }
+            if (playerNumber == 2) {
+            	Answer = "The computer is rock. You are paper. You Win";
+                System.out.println(Answer);
+            }
+        }
+        if (programNumber == 3) {
+            if (playerNumber == 0) {
+            	Answer = "The computer is paper. You are scissor. You Win";
+                System.out.println(Answer);
+            }
+            if (playerNumber == 1) {
+            	Answer = "The computer is paper. You are rock. You Lose";
+                System.out.println(Answer);
+            }
+            if (playerNumber == 2) {
+            	Answer = "The computer is paper. You are paper. It is a Draw";
+                System.out.println(Answer);
+            }
+        } else {
+            return "Enter either 0,1,2";
+        }
+		return Answer;
+    	}
+}
+
+
+Test Code
+	
+	import static org.junit.jupiter.api.Assertions.*;
+
+	import org.junit.jupiter.api.Test;
+
+	class RockPaperScissorsTest {
+
+	@Test
+	void test() {
+		RockPaperScissors test = new RockPaperScissors();
+		String output = test.RockPaperScissorGame(2);
+		assertEquals("The computer is paper. You are paper. It is a Draw" , output);
+	}
+
+	}
+
+
+Failures:
+Answer: expected: "The computer is paper. You are paper. It is a Draw"	but was: <[ERROR]>
+
+
+Fixed Code:
+
+public class RockPaperScissors {
+    	public static String RockPaperScissorGame(int playerNumber)
+    	{
+        int programNumber = (int)(Math.random()*3);
+        String Answer = null;
+        
+        if (programNumber == 0) {
+            if (playerNumber == 0) {
+            	Answer = "The computer is scissor. You are scissor. It is a Draw";
+                return Answer;
+            }
+            if (playerNumber == 1) {
+            	Answer = "The computer is scissor. You are rock. You Win";
+            	System.out.println(Answer);
+            }
+            if (playerNumber == 2) {
+            	Answer = "The computer is scissor. You are paper. You Lose";
+                System.out.println(Answer);
+            }
+        }
+        if (programNumber == 1) {
+            if (playerNumber == 0) {
+            	Answer = "The computer is rock. You are scissor. You Lose";
+                System.out.println(Answer);
+            }
+            if (playerNumber == 1) {
+            	Answer = "The computer is rock. You are rock. It is a Draw";
+                System.out.println(Answer);
+            }
+            if (playerNumber == 2) {
+            	Answer = "The computer is rock. You are paper. You Win";
+                System.out.println(Answer);
+            }
+        }
+        if (programNumber == 2) {
+            if (playerNumber == 0) {
+            	Answer = "The computer is paper. You are scissor. You Win";
+                System.out.println(Answer);
+            }
+            if (playerNumber == 1) {
+            	Answer = "The computer is paper. You are rock. You Lose";
+                System.out.println(Answer);
+            }
+            if (playerNumber == 2) {
+            	Answer = "The computer is paper. You are paper. It is a Draw";
+                System.out.println(Answer);
+            }
+        } else {
+            return "Enter either 0,1,2";
+        }
+		return Answer;
+    	}
+}
+
+
+The Problem:
+The Math.random output starts at 0, but the code presumed it started at 1
+
+
+
+Test 3
+
+Original Code
+
+public class NumberSquared {
+
+	public int squared(int x) {
+		return sqrt(x);
+	}
+
+	private int sqrt(int x) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+}
+
+
+Test Code
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class NumberSquaredTest {
+
+	@Test
+	void test() {
+		NumberSquared test = new NumberSquared();
+		int output = test.squared(100);
+		assertEquals(10000, output);
+	}
+
+}
+
+
+Failures:
+output: expected: 10000		but was: 10
+
+
+Fixed Code:
+
+public class NumberSquared {
+
+	public int squared(int x) {
+		return x*x;
+	}
+
+}
+
+
+The Problem:
+The original code was finding the square root rather than the square of the number
