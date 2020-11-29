@@ -1,0 +1,53 @@
+/**
+This is the class that we are testing, put all the methods you are testing in here
+*/
+
+import java.util.Scanner;
+
+import java.util.Scanner;
+
+public class Class_Compiled {
+
+	public Class_Compiled() {
+
+	}
+
+	public String getShape(String Shape) {
+		Shape = Shape.toLowerCase();
+		@SuppressWarnings("resource")
+		Scanner MyObj = new Scanner(System.in);
+		System.out.print(Shape);
+		if (Shape.equals("square")) {
+			System.out.println("What is the length of the sides in cm");
+			double side = MyObj.nextDouble();
+			getSquare(side);
+			return "square";
+		} else if (Shape.equals("circle")) {
+			System.out.println("What is the length of the radius in cm");
+			double radius = MyObj.nextDouble();
+			getCircle(radius);
+		} else if (Shape.equals("triangle")) {
+			System.out.println("Input the length of each of the sides of your triangle");
+			double s1 = MyObj.nextDouble();
+			double s2 = MyObj.nextDouble();
+			double s3 = MyObj.nextDouble();
+			getTriangle(s1, s2, s3);
+		}
+		return ("Shape was not a square, circle, or triangle");
+	}
+
+	public double getSquare(double side) {
+		// error above
+		return side * side;
+	}
+
+	public double getCircle(double radius) {
+		// error here
+		return (Math.pow(radius, 2)) * Math.PI;
+	}
+
+	public double getTriangle(double s1, double s2, double s3) {
+		double halfperim = (s1 + s2 + s3) / 2;
+		return Math.sqrt(halfperim * (halfperim - s1) * (halfperim - s2) * (halfperim - s3));
+	}
+}
