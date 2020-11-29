@@ -1,0 +1,241 @@
+-------------------------------------------------
+Original code:
+ double getScore(int i){
+        return testScores[i];
+    }
+
+Test:
+public class TestResultsTest {
+	
+	@Test
+	public void testGetScore1(){ 
+		TestResults t1 = new TestResults(3);
+		t1.setScore(1, 50.5);
+		t1.setScore(2, 31.25);
+		t1.setScore(3, 41.2);
+		double score = t1.getScore(1);
+		assertEquals(50.5, score, 0);
+	}
+	
+	@Test
+	public void testGetScore2(){
+		TestResults t1 = new TestResults(3);
+		t1.setScore(1, 50.5);
+		t1.setScore(2, 31.25);
+		t1.setScore(3, 41.2);
+		double score = t1.getScore(2);
+		assertEquals(31.25, score, 0);
+	}
+}
+
+Failures:
+testGetGrade1 : expected:<50.5> but was:<31.25>
+testGetGrade2 : expected:<31.25> but was:<41.2>
+
+FixedCode:
+double getScore(int i){
+        i = i - 1;
+        return testScores[i];
+}
+
+What was wrong:
+Since a user starts counting from 1 while computer starts from 0 the array postition it was geting offset by minus one and returning the value at that offset.
+	
+----------------------------------------------------------
+Original code:
+String getGradeOfExam(double a){ 
+        double avg = a;
+        
+        if(avg == 0){
+            return ("NG");
+        }else if (avg > 1 && avg <= 29){
+            return("F");
+        }else if ( avg > 30 && avg <= 34){
+            return ("D2");
+        }else if ( avg > 35 && avg <= 40){
+            return ("D1");
+        }else if ( avg > 40 && avg <= 47){
+            return ("C3");
+        }else if ( avg > 48 && avg <= 51){
+            return ("C2");
+        }else if ( avg > 52 && avg <= 55){
+            return ("C1");
+        }else if ( avg > 56 && avg <= 59){
+            return ("B3");
+        }else if ( avg > 60 && avg <= 63){
+            return ("B2");
+        }else if ( avg > 63 && avg <= 71){
+            return ("B1");
+        }else if ( avg > 71 && avg <= 79){
+            return ("A2");
+        }else if ( avg > 80 && avg <= 100){
+            return ("A1");
+        }
+        return ("ERROR");
+    }
+
+
+Test:
+class GradeTest {
+    @ParameterizedTest(name = "{index} score {0} is {1}")
+    @CsvSource({
+        "0, NG",
+        "30, D2",
+        "33, D2",
+        "55, C1",
+        "56, B3",
+        "77, A2",
+        "80, A1",
+        "99, A1"
+})
+	void testGrade(double score, String expectedResult) {
+        Grade checker = new Grade();
+        String result = checker.getGradeOfExam(score);
+
+        assertEquals(expectedResult, result);
+    }
+
+Failures:
+testGradeOfExam1 : expected:<[D2]> but was:<[ERROR]>
+testGradeOfExam1 : expected:<[B3]> but was:<[ERROR]>
+testGradeOfExam1 : expected:<[A1]> but was:<[ERROR]>
+
+Fixed code:
+String getGradeOfExam(double a){ 
+        double avg = a;
+        
+       if(avg == 0){
+            return ("NG");
+        }else if (avg >= 1 && avg <= 29){
+            return("F");
+        }else if ( avg >= 30 && avg <= 34){
+            return ("D2");
+        }else if ( avg >= 35 && avg <= 40){
+            return ("D1");
+        }else if ( avg >= 40 && avg <= 47){
+            return ("C3");
+        }else if ( avg >= 48 && avg <= 51){
+            return ("C2");
+        }else if ( avg >= 52 && avg <= 55){
+            return ("C1");
+        }else if ( avg >= 56 && avg <= 59){
+            return ("B3");
+        }else if ( avg >= 60 && avg <= 63){
+            return ("B2");
+        }else if ( avg >=64 && avg <= 71){
+            return ("B1");
+        }else if ( avg >= 72 && avg <= 79){
+            return ("A2");
+        }else if ( avg >= 80 && avg <= 100){
+            return ("A1");
+        }
+        return ("ERROR");
+    }
+
+
+What was wrong:
+In the original code the check was alwaya ommiting a certain number because it was > rather than <=. 
+---------------------------------------------------------------------------------------------------------
+Original code:
+double getAverage(){
+        double total = 0;
+        double avg;
+        for (int i = 0; i < testScores.length; i++){
+            total = total + testScores[i];
+        }
+        avg = total / testScores.length;
+        return avg;
+    }
+
+Test:
+
+@Test
+	public void testGetScore1(){ 
+		TestResults t1 = new TestResults(3);
+		t1.setScore(1, 50.5);
+		t1.setScore(2, 12.5);
+		t1.setScore(3, 80.85);
+		double score = t1.getAverage();
+		assertEquals(47.93, score, 0);
+	}
+	
+	@Test
+	public void testGetScore2(){
+		TestResults t2 = new TestResults(3);
+		t2.setScore(1, 50.5);
+		t2.setScore(2, 31.25);
+		t2.setScore(3, 41.2);
+		double score = t2.getAverage();
+		assertEquals(40.98, score, 0);
+	}
+
+Failures:
+testGetAverage1 : expected:<47.95> but was:<47.949999999999996>
+testGetAverage2 : expected:<40.98> but was:<40.983333333333334>
+
+Fixed code:
+double getAverage(){
+        double total = 0;
+        double avg;
+        for (int i = 0; i < testScores.length; i++){
+            total = total + testScores[i];
+        }
+        avg = total / testScores.length;
+        BigDecimal bd = new BigDecimal(avg).setScale(2, RoundingMode.HALF_UP);
+        avg = bd.doubleValue();
+        return avg;
+    }
+
+What was wrong:
+The original method wasn't rounding the answer.
+------------------------------------------------------------
+Original code: 
+void setScore(int i, double value){
+        i = i - 1; 
+        testScores[i] = value;
+        }
+    double getScore(int i){
+    	 i = i - 1; 
+        return testScores[i];
+    }
+
+Test
+@Test
+	public void testGetScore1(){ 
+		TestResults t1 = new TestResults(3);
+	t1.setScore(1, 50.509);
+	t1.setScore(2, 31.25);
+	t1.setScore(3, 41.2);
+	double score = t1.getScore(1);
+	assertEquals(50.5, score, 0);
+	}
+	
+	@Test
+	public void testGetScore2(){
+		TestResults t1 = new TestResults(3);
+	t1.setScore(1, 50.5);
+	t1.setScore(2, 31.254);
+	t1.setScore(3, 41.2);
+	double score = t1.getScore(2);
+	assertEquals(31.25, score, 0);
+	}
+
+Failures:
+testGetScore1: expected:<50.5> but was:<50.509>
+testGetScore2: expected:<31.25> but was:<31.254>
+
+Fixed code:
+void setScore(int i, double value){
+        i = i - 1; 
+        value = value * 100;
+   	value = Math.floor(value) / 100;
+        testScores[i] = value;
+        }
+    /** gets the value of the test result at position i */ 
+    double getScore(int i){
+    	 i = i - 1; 
+        return testScores[i];
+    }	
+What was wrong:
+The code never checked if the grade inputted was correctly formatted i.e. to two decimal points incase someone accidently added in a decimal or forgot to add 0. So when the results was being returned it was giving more or less than 2 decimal points.
+	
